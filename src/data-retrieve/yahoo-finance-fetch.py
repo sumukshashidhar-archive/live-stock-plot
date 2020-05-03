@@ -9,7 +9,7 @@ import json
 from datetime import date
 import time
 
-ticker = 'AAPL' ## no ticker
+ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
 # ticker_get() #disable this if you pre specify the ticker directly in the file
 
 ## this url puts the ticker variable into the yahoo query1 api
