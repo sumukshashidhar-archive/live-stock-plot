@@ -4,13 +4,14 @@ from matplotlib import style
 
 style.use('seaborn-darkgrid')
 
+
+
+filename = ''
 fig = plt.figure()
 ax1 = fig.add_subplot(1,1,1)
 
 def animate(i):
-    graph_data = open('./../../data/AAPL_2020-05-03.csv','r').read()
-    # graph_data = open('example.txt','r').read()
-
+    graph_data = open(filename,'r').read()
     lines = graph_data.split('\n')
     xs = []
     ys = []
@@ -22,6 +23,9 @@ def animate(i):
     ax1.clear()
     ax1.plot(xs, ys)
 
+
+def set_filename(name):
+    filename = name
 
 ani = animation.FuncAnimation(fig, animate, interval=5000)
 plt.show()
