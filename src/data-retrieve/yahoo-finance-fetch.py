@@ -6,26 +6,26 @@
 
 import urllib.request
 import json
+from datetime import date
 
-
-def ticker_get():
-    ticker = input("Please enter the ticker you wish to retrieve. Check the yahoo finance website for tickers")
-
-
-
-ticker = 'AAPL'
-ticker_get() #disable this if you pre specify the ticker directly in the file
+ticker = 'AAPL' ## no ticker
+# ticker_get() #disable this if you pre specify the ticker directly in the file
 
 ## this url puts the ticker variable into the yahoo query1 api
-url = f"https://query1.finance.yahoo.com/v7/finance/quote?symbols={ticker}&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
+url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
 
 # print(url)
 
-def stdout(data):
-    f = open("./../../data/test.csv", 'w')
-    f.write(str(data))
-    f.write('\n')
-    f.close()
+def stdout(data, stock_name):
+    try:
+        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'a')
+    except FileNotFoundError:
+        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'w')
+    finally:
+        f.write(str(data))
+        f.write('\n')
+        f.close()
+
 
 
 def data_parse(new_data):
@@ -37,8 +37,8 @@ def data_parse(new_data):
     # print(data_parsed)
     print(json.dumps(data_parsed, indent=4))
     # print(data_parsed.keys())s
-    data = data_parsed["bid"]
-    stdout(data)
+    data = data_parsed["regularMarketPrice"]
+    stdout(data, ticker)
 
 def get_new_data():
     new_data = urllib.request.urlopen(url)
