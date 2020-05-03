@@ -13,9 +13,12 @@ import argparse
 ## this url puts the ticker variable into the yahoo query1 api
 def stdout(price_data, market_time,stock_name):
     try:
-        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'a')
+        f = open(str("./data/"+stock_name+'_'+str(date.today())+ ".csv"), 'a')
     except FileNotFoundError:
-        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'w')
+        try:
+            f = open(str("./data/"+stock_name+'_'+str(date.today())+ ".csv"), 'w')
+        except:
+            print("You are running the file directly from the source directory. \n This is not supported at the time \n  Please run it from the root directory of the repo")
     finally:
         f.write(str(str(market_time) + ',' + str(price_data)))
         f.write('\n')
@@ -52,5 +55,6 @@ if args.ticker == None:
 else:
     ticker = args.ticker
     url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
-    print("Pass this as an argument to the plotting module for it to start up"+ "./../../data/"+ticker+'_'+str(date.today())+ ".csv")
+    print("\n\n\n\n")
+    print("Pass this as an argument to the plotting module for it to start up \n \n"+ "./../../data/"+ticker+'_'+str(date.today())+ ".csv")
     periodic_fetch_loop()
