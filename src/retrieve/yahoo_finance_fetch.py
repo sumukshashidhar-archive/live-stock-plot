@@ -9,8 +9,18 @@ import json
 from datetime import date
 import time
 
-ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
+
+
+# ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
 # ticker_get() #disable this if you pre specify the ticker directly in the file
+
+def set_ticker_and_url(ticker):
+    ticker = ticker
+    url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
+
+
+
+
 
 ## this url puts the ticker variable into the yahoo query1 api
 url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
@@ -49,4 +59,8 @@ def periodic_fetch_loop():
         print("Getting new data")
 
 
-periodic_fetch_loop()
+
+if __name__ == '__main__':
+    ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
+    url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
+    periodic_fetch_loop()
