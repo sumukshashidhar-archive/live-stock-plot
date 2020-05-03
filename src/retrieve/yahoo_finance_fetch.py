@@ -56,5 +56,6 @@ else:
     ticker = args.ticker
     url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
     print("\n\n\n\n")
-    print("Pass this as an argument to the plotting module for it to start up \n \n"+ "./../../data/"+ticker+'_'+str(date.today())+ ".csv")
+    print("Pass this as an argument to the plotting module for it to start up \n \n"+ "./data/"+ticker+'_'+str(date.today())+ ".csv" + "\n\n")
+    print("Killing this terminal stops data retrieval. Do so at your own risk")
     periodic_fetch_loop()
