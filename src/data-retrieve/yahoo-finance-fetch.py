@@ -7,6 +7,7 @@
 import urllib.request
 import json
 from datetime import date
+import time
 
 ticker = 'AAPL' ## no ticker
 # ticker_get() #disable this if you pre specify the ticker directly in the file
@@ -18,11 +19,11 @@ url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&r
 
 def stdout(price_data, market_time,stock_name):
     try:
-        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'a')
+        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".txt", 'a')
     except FileNotFoundError:
-        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'w')
+        f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".txt", 'w')
     finally:
-        f.write(str(str(price_data) + ',' + str(market_time)))
+        f.write(str(str(market_time) + ',' + str(price_data)))
         f.write('\n')
         f.close()
 
@@ -32,7 +33,7 @@ def data_parse(new_data):
     string = new_data.read().decode('utf-8')
     data_parsed = json.loads(string)
     data_parsed = data_parsed["quoteResponse"]["result"][0]
-    print(json.dumps(data_parsed, indent=4)) ## for debugging purposes
+    # print(json.dumps(data_parsed, indent=4)) ## for debugging purposes
     stdout(data_parsed["regularMarketPrice"], data_parsed["regularMarketTime"], ticker)
 
 def get_new_data():
@@ -40,9 +41,12 @@ def get_new_data():
     data_parse(new_data)
 
 
-
 def periodic_fetch_loop():
-    pass
+    while(True):
+        ## try fetching every 10 seconds
+        get_new_data()
+        time.sleep(9)
+        print("Getting new data")
 
 
-get_new_data()
+periodic_fetch_loop()
