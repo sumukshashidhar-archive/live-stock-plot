@@ -10,16 +10,6 @@ from datetime import date
 import time
 import argparse
 
-# ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
-# ticker_get() #disable this if you pre specify the ticker directly in the file
-#
-# def set_ticker_and_url(ticker):
-#     ticker = ticker
-#     url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
-#
-#
-#
-
 ## this url puts the ticker variable into the yahoo query1 api
 def stdout(price_data, market_time,stock_name):
     try:
@@ -52,8 +42,15 @@ def periodic_fetch_loop():
         time.sleep(9)
 
 
-if __name__ == '__main__':
-    ticker = input('Enter the symbol for the stock you want to track. A full list can be found on the yahoo finance website \n \n')
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--ticker", help="Add the ticker")
+args = parser.parse_args()
+
+if args.ticker == None:
+    print("Please pass in the ticker argument for this to work")
+    exit()
+else:
+    ticker = args.ticker
     url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
     print("Pass this as an argument to the plotting module for it to start up"+ "./../../data/"+ticker+'_'+str(date.today())+ ".csv")
     periodic_fetch_loop()
