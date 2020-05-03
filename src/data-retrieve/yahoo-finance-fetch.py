@@ -16,13 +16,13 @@ url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&r
 
 # print(url)
 
-def stdout(data, stock_name):
+def stdout(price_data, market_time,stock_name):
     try:
         f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'a')
     except FileNotFoundError:
         f = open("./../../data/"+stock_name+'_'+str(date.today())+ ".csv", 'w')
     finally:
-        f.write(str(data))
+        f.write(str(str(price_data) + ',' + str(market_time)))
         f.write('\n')
         f.close()
 
@@ -31,14 +31,9 @@ def stdout(data, stock_name):
 def data_parse(new_data):
     string = new_data.read().decode('utf-8')
     data_parsed = json.loads(string)
-    data_parsed = data_parsed["quoteResponse"]
-    data_parsed = data_parsed["result"]
-    data_parsed = data_parsed[0]
-    # print(data_parsed)
-    print(json.dumps(data_parsed, indent=4))
-    # print(data_parsed.keys())s
-    data = data_parsed["regularMarketPrice"]
-    stdout(data, ticker)
+    data_parsed = data_parsed["quoteResponse"]["result"][0]
+    print(json.dumps(data_parsed, indent=4)) ## for debugging purposes
+    stdout(data_parsed["regularMarketPrice"], data_parsed["regularMarketTime"], ticker)
 
 def get_new_data():
     new_data = urllib.request.urlopen(url)
