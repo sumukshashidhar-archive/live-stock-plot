@@ -76,34 +76,35 @@ def get_new_data():
     data_parse(new_data)
 
 
-def periodic_fetch_loop():
+def periodic_fetch_loop(seconds):
     """
     Just to keep collecting data
     """
     while(True):
         ## try fetching every 10 seconds
         get_new_data()
-        time.sleep(9)
+        time.sleep(seconds)
 
 
+
+
+# Parsing arguments passed from the command line
 parser = argparse.ArgumentParser()
-
 parser.add_argument("-r", "--recall", help="Set the max history for the plot. DEFAULT=200")
 parser.add_argument("-t", "--ticker", help="Add the ticker")
 parser.add_argument("-s", "--seconds", help="The number of seconds between each fetch. DEFAULT=10")
 args = parser.parse_args()
 
 
+# setting defaults if arguments weren't passed
 history = int(args.recall) if args.recall!=None else 200
 seconds = int(args.seconds) if args.seconds!=None else 10
+ticker = args.ticker if args.ticker!=None else "^BSESN"
 
-if args.ticker == None:
-	print("Please pass in the ticker argument for this to work")
-	exit()
-else:
-	ticker = args.ticker
-	url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
-	print("\n\n\n\n")
-	print("Pass this as an argument to the plotting module for it to start up \n \n"+ "./data/"+ticker+'_'+str(date.today())+ ".csv" + "\n\n")
-	print("Killing this terminal stops data retrieval. Do so at your own risk")
-	periodic_fetch_loop()
+url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols="+ ticker + "&range=1d&interval=5m&indicators=close&includeTimestamps=false&includePrePost=false&corsDomain=finance.yahoo.com&.tsrc=finance"
+print("\n\n\n\n")
+print(f'Getting data for: {ticker} with an interval of {seconds} and showing data upto {history} iterations')
+print("\n\n\n\n")
+print("Pass this as an argument to the plotting module for it to start up: "+ "./data/"+ticker+'_'+str(date.today())+ ".csv" + "\n\n")
+print("Killing this terminal stops data retrieval. Do so at your own risk")
+periodic_fetch_loop(seconds)
