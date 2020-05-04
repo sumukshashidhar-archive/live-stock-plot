@@ -8,7 +8,9 @@ This is a simple python package to retrieve and plot live stock data
 
 From the source folder, open up the yahoo_finance_fetch.py and pass the ticker as an argument. For example
 
-`python3 src/retrieve/yahoo_finance_fetch.py --ticker AAPL`
+`python3 src/retrieve/yahoo_finance_fetch.py --ticker AAPL --recall 200`
+
+The above line starts getting data for apple stock, and has data for 200 iterations. 
 
 **This must be run from the root directory, and not from the source directory**
 

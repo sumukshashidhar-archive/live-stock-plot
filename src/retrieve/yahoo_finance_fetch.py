@@ -88,9 +88,14 @@ def periodic_fetch_loop():
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-r", "--recall", help="Set the max history for the plot")
+parser.add_argument("-r", "--recall", help="Set the max history for the plot. DEFAULT=200")
 parser.add_argument("-t", "--ticker", help="Add the ticker")
+parser.add_argument("-s", "--seconds", help="The number of seconds between each fetch. DEFAULT=10")
 args = parser.parse_args()
+
+
+history = int(args.recall) if args.recall!=None else 200
+seconds = int(args.seconds) if args.seconds!=None else 10
 
 if args.ticker == None:
 	print("Please pass in the ticker argument for this to work")
@@ -101,5 +106,4 @@ else:
 	print("\n\n\n\n")
 	print("Pass this as an argument to the plotting module for it to start up \n \n"+ "./data/"+ticker+'_'+str(date.today())+ ".csv" + "\n\n")
 	print("Killing this terminal stops data retrieval. Do so at your own risk")
-	history = int(args.recall)
 	periodic_fetch_loop()
