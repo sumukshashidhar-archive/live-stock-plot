@@ -18,3 +18,8 @@ To visualize the data that you get
 
 
 > These are samples. Yours will be different, based on the data you wish to visualize.
+
+
+Once you're done with your session, to remove the collected data, you can use the clean script
+
+`python3 src/clean/clean_data.py`
