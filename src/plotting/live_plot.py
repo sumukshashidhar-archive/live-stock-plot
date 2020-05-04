@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--path", help="Add the filepath as a string")
 parser.add_argument("-i", "--interval", help="Time in seconds before updates to the graph")
 args = parser.parse_args()
-inter = args.interval if args.interval!=None else 5
+inter = args.interval if args.interval!=None else 5000
 
 if args.path == None:
     print("Please pass in the path argument for this to work")
