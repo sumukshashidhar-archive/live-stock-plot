@@ -4,7 +4,7 @@ from matplotlib import style
 import argparse
 
 # styling
-style.use('seaborn-darkgrid')
+style.use('dark_background')
 
 #parsing arguments
 parser = argparse.ArgumentParser()
